@@ -1,0 +1,230 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input AuthInput {
+  email: String!
+  password: String!
+}
+
+type AuthResponseWeb {
+  accessToken: String!
+  user: User!
+}
+
+type Location {
+  id: ID!
+  name: String!
+  projectId: String!
+  project: Project!
+  scenes: [Scene!]!
+}
+
+input LocationCreateInput {
+  name: String!
+}
+
+input LocationUpdateInput {
+  name: String
+}
+
+type Mutation {
+  createWorkday(projectId: String!, input: WorkdayCreateInput!): Workday!
+  updateWorkday(workdayId: String!, input: WorkdayUpdateInput!): Workday!
+  deleteWorkday(workdayId: String!): Boolean!
+  updateWorkdayScenes(sceneIds: [String!]!, workdayId: String!): WorkdayUpdateScenesResponse!
+  addScenesToWorkday(sceneIds: [String!]!, workdayId: String!): Workday!
+  removeScenesFromWorkday(sceneIds: [String!]!, workdayId: String!): Boolean!
+  createLocation(projectId: String!, input: LocationCreateInput!): Location!
+  updateLocation(locationId: String!, input: LocationUpdateInput!): Location!
+  deleteLocation(locationId: String!): Boolean!
+  createReqType(projectId: String!, input: ReqTypeCreateInput!): ReqType!
+  updateReqType(reqTypeId: String!, input: ReqTypeUpdateInput!): ReqType!
+  deleteReqType(reqTypeId: String!): Boolean!
+  createRequisite(projectId: String!, input: RequisiteCreateInput!): Requisite!
+  updateRequisite(requisiteId: String!, input: RequisiteUpdateInput!): Requisite!
+  deleteRequisite(requisiteId: String!): Boolean!
+  updateRequisiteScenes(sceneIds: [String!]!, requisiteId: String!): RequisiteUpdateScenesResponse!
+  updateRequisiteReqTypes(reqTypeIds: [String!]!, requisiteId: String!): RequisiteUpdateReqTypesResponse!
+  createScene(input: SceneCreateInput!, projectId: String!): Scene!
+  updateScene(sceneId: String!, input: SceneUpdateInput!): Scene!
+  completeManyScenes(sceneIds: [String!]!): [Scene!]!
+  deleteScene(sceneId: String!): Boolean!
+  updateSceneRequisites(requisiteIds: [String!]!, sceneId: String!): SceneUpdateRequisitesResponse!
+  updateSceneLocations(locationIds: [String!]!, sceneId: String!): SceneUpdateLocationsResponse!
+  updateSceneWorkdays(workdayIds: [String!]!, sceneId: String!): SceneUpdateWorkdaysResponse!
+
+  """Create new project"""
+  createProject(input: ProjectCreateInput!): Project!
+  updateProject(input: ProjectUpdateInput!, projectId: String!): Project!
+  deleteProject(projectId: String!): Boolean!
+  updateMe(input: UserUpdateInput!): User!
+  deleteMe: Boolean!
+  loginWeb(input: AuthInput!): AuthResponseWeb!
+  registerWeb(input: AuthInput!): AuthResponseWeb!
+  logoutWeb: Boolean!
+  forceLogoutWeb: Boolean!
+}
+
+type Project {
+  id: ID!
+  title: String!
+  description: String
+  ownerId: String!
+  owner: User!
+  workdays: [Workday!]!
+  locations: [Location!]!
+  reqTypes: [ReqType!]!
+  scenes: [Scene!]!
+  requisites: [Requisite!]!
+}
+
+input ProjectCreateInput {
+  title: String!
+  description: String
+}
+
+input ProjectUpdateInput {
+  title: String
+  description: String
+}
+
+type Query {
+  workdays(projectId: String!): [Workday!]!
+  workday(workdayId: String!): Workday!
+  locations(projectId: String!): [Location!]!
+  reqTypes(projectId: String!): [ReqType!]!
+  requisites(projectId: String!): [Requisite!]!
+  requisite(requisiteId: String!): Requisite!
+  scenes(projectId: String!): [Scene!]!
+  scene(sceneId: String!): Scene!
+  ownedProjects: [Project!]!
+  me: User!
+}
+
+type ReqType {
+  id: ID!
+  name: String!
+  projectId: String!
+  project: Project!
+  requisites: [Requisite!]!
+}
+
+input ReqTypeCreateInput {
+  name: String!
+}
+
+input ReqTypeUpdateInput {
+  name: String
+}
+
+type Requisite {
+  id: ID!
+  number: Float!
+  title: String!
+  description: String
+  projectId: String!
+  project: Project!
+  scenes: [Scene!]!
+  reqTypes: [ReqType!]!
+}
+
+input RequisiteCreateInput {
+  number: Int!
+  title: String!
+  description: String
+}
+
+input RequisiteUpdateInput {
+  title: String
+  description: String
+}
+
+type RequisiteUpdateReqTypesResponse {
+  updatedRequisite: Requisite!
+  updatedReqTypes: [ReqType!]!
+}
+
+type RequisiteUpdateScenesResponse {
+  updatedRequisite: Requisite!
+  updatedScenes: [Scene!]!
+}
+
+type Scene {
+  id: ID!
+  number: Float!
+  isCompleted: Boolean!
+  title: String
+  description: String
+  projectId: String!
+  project: Project!
+  workdays: [Workday!]!
+  requisites: [Requisite!]!
+  locations: [Location!]!
+}
+
+input SceneCreateInput {
+  number: Int!
+  title: String
+  description: String
+}
+
+input SceneUpdateInput {
+  number: Int
+  title: String
+  description: String
+  isCompleted: Boolean
+}
+
+type SceneUpdateLocationsResponse {
+  updatedScene: Scene!
+  updatedLocations: [Location!]!
+}
+
+type SceneUpdateRequisitesResponse {
+  updatedScene: Scene!
+  updatedRequisites: [Requisite!]!
+}
+
+type SceneUpdateWorkdaysResponse {
+  updatedScene: Scene!
+  updatedWorkdays: [Workday!]!
+}
+
+type User {
+  id: ID!
+  email: String!
+  name: String
+  phone: String
+  projects: [Project!]!
+}
+
+input UserUpdateInput {
+  phone: String
+  name: String
+  email: String
+}
+
+type Workday {
+  id: ID!
+  date: String!
+  description: String
+  projectId: String!
+  project: Project!
+  scenes: [Scene!]!
+}
+
+input WorkdayCreateInput {
+  date: String!
+  description: String
+}
+
+input WorkdayUpdateInput {
+  date: String
+  description: String
+}
+
+type WorkdayUpdateScenesResponse {
+  updatedWorkday: Workday!
+  updatedScenes: [Scene!]!
+}
