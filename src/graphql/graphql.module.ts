@@ -13,7 +13,6 @@ import { IContext } from './graphql.interfaces';
         GraphQLModule.forRoot({
             playground:     true,
             autoSchemaFile: 'schema.graphql',
-            cacheControl:   true,
             cors:           false,
             context:        ({ req, res }): IContext => ({ req, res }),
         }),
